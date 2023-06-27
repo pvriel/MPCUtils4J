@@ -1,5 +1,6 @@
 package com.github.pvriel.mpcutils4j.math;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
@@ -12,6 +13,7 @@ class MultiplicativeGroupTest {
     private final static BigInteger q = new BigInteger("26959946667150639794667015087019630673637144422540572481103610249951");
     private final static MultiplicativeGroup group = new MultiplicativeGroup(p);
 
+    @DisplayName("Try to generate random elements from the group.")
     @Test
     void getRandomElements() {
         BigInteger[] randomElements = group.getRandomElements(1000);
@@ -28,6 +30,7 @@ class MultiplicativeGroupTest {
         }
     }
 
+    @DisplayName("Try to generate elements with a specific order from the group.")
     @Test
     void getElementOfOrder() {
         BigInteger elementOfOrder = group.getElementOfOrder(q);
