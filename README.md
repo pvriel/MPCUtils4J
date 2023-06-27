@@ -3,7 +3,7 @@ A Java library containing math, stream, ... util classes that I used to work wit
 <br>This project mainly exists to make my life easier (so that I don't have to copy-paste code), but feel free to use it if you want.
 
 [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Coverage](https://badgen.net/badge/coverage/92%25/green)](https://badgen.net/badge/coverage/92%25/green)
+[![Coverage](https://badgen.net/badge/coverage/96%25/green)](https://badgen.net/badge/coverage/96%25/green)
 
 ***
 
