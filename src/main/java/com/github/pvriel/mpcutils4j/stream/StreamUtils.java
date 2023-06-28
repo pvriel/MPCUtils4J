@@ -40,6 +40,34 @@ public abstract class StreamUtils {
         return new BigInteger(receiveInputWithLengthPrefix(inputStream));
     }
 
+/**
+     * Method to read a byte array from an {@link OutputStream}.
+     * This method first reads a 4-byte long length prefix at the beginning of the resulting array.
+     * <br>This method is compatible with the readFromInputStream method.
+     * @param   inputStream
+     *          The {@link InputStream} to read the instance from. No null values are allowed.
+     * @throws  IOException
+     *          If the {@link OutputStream} threw an exception while reading the data.
+     */
+    public static byte[] readByteArrayFromInputStream(InputStream inputStream) throws IOException {
+        return receiveInputWithLengthPrefix(inputStream);
+    }
+
+    /**
+     * Method to write a byte array to an {@link OutputStream}.
+     * This method adds a 4-byte long length prefix at the beginning of the resulting array.
+     * <br>This method is compatible with the readFromInputStream method.
+     * @param   array
+     *          The byte array to write. No null values are allowed.
+     * @param   outputStream
+     *          The {@link OutputStream} to write the instance to. No null values are allowed.
+     * @throws  IOException
+     *          If the {@link OutputStream} threw an exception while writing the data.
+     */
+    public static void writeByteArrayToOutputStream(byte[] array, OutputStream outputStream) throws IOException {
+        outputStream.write(addLengthPrefix(array));
+    }
+
     private static byte[] addLengthPrefix(byte[] array) {
         return ByteBuffer.allocate(array.length + 4)
                 .putInt(array.length)

@@ -44,4 +44,17 @@ class StreamUtilsTest {
             assertEquals(randomValue, readValue);
         }
     }
+
+    @Test
+    @DisplayName("Check if a byte array can be correctly written to an OutputStream and read from an InputStream.")
+    void writeByteArrayToOutputStream() throws IOException {
+        int amountOfTests = 1000;
+        int bitLengthValues = 2048;
+        for (int i = 0; i < amountOfTests; i ++) {
+            byte[] randomValue = new BigInteger(bitLengthValues, random).toByteArray();
+            StreamUtils.writeByteArrayToOutputStream(randomValue, outputStream);
+            byte[] readValue = StreamUtils.readByteArrayFromInputStream(inputStream);
+            assertArrayEquals(randomValue, readValue);
+        }
+    }
 }
