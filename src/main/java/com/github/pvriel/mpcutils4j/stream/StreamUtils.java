@@ -40,6 +40,42 @@ public abstract class StreamUtils {
         return new BigInteger(receiveInputWithLengthPrefix(inputStream));
     }
 
+    /**
+     * Method to write a {@link BigInteger} array to an {@link OutputStream}.
+     * @param   bigIntegers
+     *          The {@link BigInteger} array to write. No null values are allowed.
+     * @param   outputStream
+     *          The {@link OutputStream} to write the instance to. No null values are allowed.
+     * @throws  IOException
+     *          If the {@link OutputStream} threw an exception while writing the data.
+     */
+    public static void writeArrayOfBigIntegersToOutputStream(BigInteger[] bigIntegers, OutputStream outputStream) throws IOException {
+        outputStream.write(ByteBuffer.allocate(4).putInt(bigIntegers.length).array());
+        for (BigInteger bigInteger : bigIntegers) {
+            writeBigIntegerToOutputStream(bigInteger, outputStream);
+        }
+    }
+
+    /**
+     * Method to read a {@link BigInteger} array from an {@link OutputStream}.
+     * @param   inputStream
+     *          The {@link InputStream} to read the instance from. No null values are allowed.
+     * @return  The resulting {@link BigInteger} array.
+     * @throws  IOException
+     *          If the {@link OutputStream} threw an exception while reading the data.
+     */
+    public static BigInteger[] readArrayOfBigIntegersFromInputStream(InputStream inputStream) throws IOException {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(inputStream.readNBytes(4));
+        int length = byteBuffer.getInt();
+        byteBuffer.clear();
+
+        BigInteger[] bigIntegers = new BigInteger[length];
+        for (int i = 0; i < length; i++) {
+            bigIntegers[i] = readBigIntegerFromInputStream(inputStream);
+        }
+        return bigIntegers;
+    }
+
 /**
      * Method to read a byte array from an {@link OutputStream}.
      * This method first reads a 4-byte long length prefix at the beginning of the resulting array.
@@ -48,6 +84,7 @@ public abstract class StreamUtils {
      *          The {@link InputStream} to read the instance from. No null values are allowed.
      * @throws  IOException
      *          If the {@link OutputStream} threw an exception while reading the data.
+     * @return  The resulting byte array.
      */
     public static byte[] readByteArrayFromInputStream(InputStream inputStream) throws IOException {
         return receiveInputWithLengthPrefix(inputStream);

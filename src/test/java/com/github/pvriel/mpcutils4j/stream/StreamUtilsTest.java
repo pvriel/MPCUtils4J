@@ -19,7 +19,7 @@ class StreamUtilsTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        PipedInputStream pipedInputStream = new PipedInputStream(10_000);
+        PipedInputStream pipedInputStream = new PipedInputStream(100_000);
         PipedOutputStream pipedOutputStream = new PipedOutputStream(pipedInputStream);
 
         inputStream = pipedInputStream;
@@ -43,6 +43,22 @@ class StreamUtilsTest {
             BigInteger readValue = StreamUtils.readBigIntegerFromInputStream(inputStream);
             assertEquals(randomValue, readValue);
         }
+    }
+
+    @Test
+    @DisplayName("Check if an array of BigIntegers can be correctly written to an OutputStream and read from an InputStream.")
+    void writeArrayOfBigIntegersToOutputStream() throws IOException {
+        int amountOfValues = 100;
+        int bitLengthValues = 2048;
+
+        BigInteger[] randomValues = new BigInteger[amountOfValues];
+        for (int j = 0; j < randomValues.length; j++) {
+            randomValues[j] = new BigInteger(bitLengthValues, random);
+        }
+        StreamUtils.writeArrayOfBigIntegersToOutputStream(randomValues, outputStream);
+        BigInteger[] readValues = StreamUtils.readArrayOfBigIntegersFromInputStream(inputStream);
+        assertArrayEquals(randomValues, readValues);
+
     }
 
     @Test
